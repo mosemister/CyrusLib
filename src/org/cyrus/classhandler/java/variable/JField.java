@@ -3,7 +3,7 @@ package org.cyrus.classhandler.java.variable;
 import org.cyrus.classhandler.common.Visibility;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.line.variable.Field;
-import org.cyrus.classhandler.java.classtype.CommonJavaClass;
+import org.cyrus.classhandler.java.classtype.AbstractCommonJavaClass;
 
 import java.lang.reflect.Modifier;
 import java.util.Optional;
@@ -53,6 +53,6 @@ public class JField implements Field {
 
     @Override
     public Optional<CommonClass<? extends CommonClass>> getReturn() {
-        return Optional.of(CommonJavaClass.of(this.field.getType()));
+        return Optional.of(AbstractCommonJavaClass.of(this.field.getType()));
     }
 }

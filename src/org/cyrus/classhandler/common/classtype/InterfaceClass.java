@@ -1,5 +1,9 @@
 package org.cyrus.classhandler.common.classtype;
 
+/**
+ * base class for all interface classes
+ * @param <C> itself
+ */
 public interface InterfaceClass<C extends InterfaceClass> extends CommonClass<C> {
 
     @Override

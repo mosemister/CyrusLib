@@ -3,11 +3,16 @@ package org.cyrus.classhandler.custom.variable;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.function.Function;
 import org.cyrus.classhandler.common.line.variable.Parameter;
+import org.cyrus.classhandler.custom.classtype.AbstractCommonCustomClass;
 import org.cyrus.classhandler.custom.classtype.CommonCustomClass;
 
 import java.util.Optional;
 
-public class CustomParameter<C extends CommonCustomClass> extends CustomStore implements Parameter.Writable<C> {
+/**
+ * The implementation of Parameters for custom functions
+ * @param <C> The attached class
+ */
+public class CustomParameter<C extends CommonCustomClass> extends CustomVariable<C> implements Parameter.Writable<C> {
 
     protected Function<C> attached;
     protected CommonClass<? extends CommonClass> return1;
@@ -19,7 +24,7 @@ public class CustomParameter<C extends CommonCustomClass> extends CustomStore im
     }
 
     @Override
-    public CommonClass<C> getAttachedClass(){
+    public C getAttachedClass(){
         return Parameter.Writable.super.getAttachedClass();
     }
 
@@ -38,4 +43,5 @@ public class CustomParameter<C extends CommonCustomClass> extends CustomStore im
         this.return1 = class1;
         return this;
     }
+
 }

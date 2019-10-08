@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class StandardJavaClass<C extends StandardJavaClass> extends CommonJavaClass<C> implements StandardClass<C> {
+public class StandardJavaClass<C extends StandardJavaClass> extends AbstractCommonJavaClass<C> implements StandardClass<C> {
 
     public static class GenericStandardJavaClass extends StandardJavaClass<GenericStandardJavaClass> implements CommonClass.AppliedGenerics<GenericStandardJavaClass>{
 
@@ -57,7 +57,7 @@ public class StandardJavaClass<C extends StandardJavaClass> extends CommonJavaCl
         if(class1 == null || (class1.isAssignableFrom(Object.class) && this.class1.isAssignableFrom(Object.class))){
             return Optional.empty();
         }
-        return Optional.of((StandardClass) CommonJavaClass.of(class1));
+        return Optional.of((StandardClass) AbstractCommonJavaClass.of(class1));
     }
 
     @Override

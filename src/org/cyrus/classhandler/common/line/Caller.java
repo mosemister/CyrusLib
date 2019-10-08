@@ -4,9 +4,9 @@ import org.cyrus.classhandler.common.classtype.CommonClass;
 
 import java.util.Optional;
 
-public interface Caller extends Line {
+public interface Caller<C extends Callable, X extends CommonClass> extends Line<X> {
 
-    Callable getCallable();
+    C getCallable();
 
     @Override
     default Optional<CommonClass<? extends CommonClass>> getReturn(){

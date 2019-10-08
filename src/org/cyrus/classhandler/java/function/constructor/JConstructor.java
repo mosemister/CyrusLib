@@ -7,7 +7,7 @@ import org.cyrus.classhandler.common.classtype.GenericList;
 import org.cyrus.classhandler.common.function.constructor.Constructor;
 import org.cyrus.classhandler.common.line.variable.Parameter;
 import org.cyrus.classhandler.java.classtype.AnnotationJavaClass;
-import org.cyrus.classhandler.java.classtype.CommonJavaClass;
+import org.cyrus.classhandler.java.classtype.AbstractCommonJavaClass;
 import org.cyrus.classhandler.java.variable.JParameter;
 
 import java.lang.annotation.Annotation;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class JConstructor<C extends CommonJavaClass> implements Constructor<C> {
+public class JConstructor<C extends AbstractCommonJavaClass> implements Constructor<C> {
 
     protected C attached;
     protected java.lang.reflect.Constructor<? extends Object> constructor;
@@ -88,7 +88,7 @@ public class JConstructor<C extends CommonJavaClass> implements Constructor<C> {
                 if (!(argument instanceof Class)) {
                     continue;
                 }
-                CommonJavaClass cjc = CommonJavaClass.of((Class) argument);
+                AbstractCommonJavaClass cjc = AbstractCommonJavaClass.of((Class) argument);
                 list.add(cjc.toAppliedGenerics(name));
             }
             vc.put(name, list);

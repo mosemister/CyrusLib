@@ -6,10 +6,8 @@ import org.cyrus.classhandler.common.classtype.CommonClass;
 import java.util.List;
 import java.util.Optional;
 
-public interface Line extends JavaParsed, Returnable {
+public interface Line<X extends CommonClass> extends JavaParsed, Returnable {
 
-    boolean isWrittenCorrectly();
-    Optional<String> getDescriptionOfError();
-    CommonClass getAttachedClass();
+    CommonClass<X> getAttachedClass();
     List<CommonClass<? extends CommonClass>> getImports();
 }

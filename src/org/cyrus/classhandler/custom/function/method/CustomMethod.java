@@ -4,19 +4,18 @@ import org.cyrus.classhandler.common.Visibility;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.function.method.Method;
 import org.cyrus.classhandler.common.line.Line;
-import org.cyrus.classhandler.common.line.variable.Parameter;
-import org.cyrus.classhandler.custom.classtype.CommonCustomClass;
+import org.cyrus.classhandler.common.line.Writable;
+import org.cyrus.classhandler.custom.classtype.AbstractCommonCustomClass;
 import org.cyrus.classhandler.custom.function.CustomFunction;
 import org.cyrus.classhandler.custom.function.CustomFunctionBuilder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 public class CustomMethod <C extends CommonClass> extends CustomFunction<C> implements Method.Writable<C> {
 
-    public static abstract class CustomMethodBuilder<C extends CommonCustomClass> extends CustomFunctionBuilder<C> {
+    public static abstract class CustomMethodBuilder<C extends AbstractCommonCustomClass> extends CustomFunctionBuilder<C> {
 
         protected String name;
         protected boolean isStatic;
@@ -32,7 +31,7 @@ public class CustomMethod <C extends CommonClass> extends CustomFunction<C> impl
             return this;
         }
 
-        public CustomMethodBuilder<C> setReturn(CommonClass class1){
+        public CustomMethodBuilder<C> setReturn(CommonClass<? extends CommonClass> class1){
             this.returnClass = class1;
             return this;
         }
@@ -42,7 +41,7 @@ public class CustomMethod <C extends CommonClass> extends CustomFunction<C> impl
     protected String name;
     protected boolean static1;
     protected CommonClass<? extends CommonClass> returns;
-    protected List<Line> lines = new ArrayList<>();
+    protected List<Line<? extends CommonClass>> lines = new ArrayList<>();
 
     public CustomMethod(C attached, String name) {
         super(attached);
@@ -89,7 +88,16 @@ public class CustomMethod <C extends CommonClass> extends CustomFunction<C> impl
     }
 
     @Override
-    public List<Line> getLines() {
+    public List<Line<? extends CommonClass>> getLines() {
         return this.lines;
+    }
+
+    @Override
+    public Optional<String> getDescriptionOfError() {
+        Optional<Line<? extends CommonClass>> opLine = getLines().stream().filter(l -> l instanceof org.cyrus.classhandler.common.line.Writable).filter(l -> ((org.cyrus.classhandler.common.line.Writable) l).isWrittenCorrectly()).findFirst();
+        if(opLine.isPresent()){
+            return ((org.cyrus.classhandler.common.line.Writable)opLine.get()).getDescriptionOfError();
+        }
+        return Optional.empty();
     }
 }

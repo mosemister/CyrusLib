@@ -3,7 +3,6 @@ package org.cyrus.classhandler.java.classtype;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.classtype.EnumClass;
 import org.cyrus.classhandler.common.function.constructor.Constructor;
-import org.cyrus.classhandler.common.line.Caller;
 import org.cyrus.classhandler.common.line.EnumEntry.EnumEntry;
 import org.cyrus.classhandler.common.line.callers.EnumEntryCall;
 import org.cyrus.classhandler.java.function.constructor.JConstructor;
@@ -13,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class EnumJavaClass<T extends EnumJavaClass> extends CommonJavaClass<T> implements EnumClass<T> {
+public class EnumJavaClass<T extends EnumJavaClass> extends AbstractCommonJavaClass<T> implements EnumClass<T> {
 
     public static class EnumJavaEntry implements EnumEntry {
 
@@ -34,8 +33,8 @@ public class EnumJavaClass<T extends EnumJavaClass> extends CommonJavaClass<T> i
         }
 
         @Override
-        public Caller getCaller() {
-            return new EnumEntryCall(this);
+        public EnumEntryCall createCaller(CommonClass<? extends CommonClass> clazz) {
+            return new EnumEntryCall(clazz, this);
         }
     }
 
@@ -89,6 +88,6 @@ public class EnumJavaClass<T extends EnumJavaClass> extends CommonJavaClass<T> i
 
     @Override
     public AppliedGenerics toAppliedGenerics(String name) {
-        return new EnumJavaClass.GenericEnumJavaClass<>(name, this.class1);
+        return new GenericEnumJavaClass<>(name, this.class1);
     }
 }

@@ -4,10 +4,11 @@ import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.classtype.InterfaceClass;
 import org.cyrus.classhandler.common.function.Function;
 import org.cyrus.classhandler.common.function.method.Method;
+import org.cyrus.classhandler.common.function.method.imethod.DefaultMethod;
 import org.cyrus.classhandler.common.line.Line;
 import org.cyrus.classhandler.common.line.variable.Field;
 import org.cyrus.classhandler.common.line.variable.Parameter;
-import org.cyrus.classhandler.common.line.variable.Store;
+import org.cyrus.classhandler.common.line.variable.Variable;
 import org.cyrus.util.ArrayUtils;
 
 import java.util.*;
@@ -42,7 +43,7 @@ public class InterfaceClassWriter implements ClassWriter.TypeWriter<InterfaceCla
         list.add("");
         List<? extends Field> fields = class1.getFields();
         if(!fields.isEmpty()) {
-            fields.stream().forEach(f -> list.add(writeStore(f, finalTabIn + 1)));
+            fields.stream().forEach(f -> list.add(writeVariable(f, finalTabIn + 1)));
             list.add("");
         }
 
@@ -59,8 +60,8 @@ public class InterfaceClassWriter implements ClassWriter.TypeWriter<InterfaceCla
         return new HashSet<>(Arrays.asList(this));
     }
 
-    private static String writeStore(Store store, int tab){
-        return writeTabs(tab) + store.getCaller().getAsJavaLine();
+    private static String writeVariable(Variable variable, int tab){
+        return writeTabs(tab) + variable.getAsJavaLine();
     }
 
     private static List<String> writeMethods(CommonClass class1, int tab){
@@ -99,15 +100,15 @@ public class InterfaceClassWriter implements ClassWriter.TypeWriter<InterfaceCla
         writer += function.getName() + "(";
         List<Parameter<? extends CommonClass>> parameters = function.getParameters();
         if(!parameters.isEmpty()){
-            writer += ArrayUtils.toString(", ", p -> p.getReturn().get().getDisplayName() + " " + p.getName(), parameters);
+            writer += ArrayUtils.toString(", ", p -> p.getAsJavaLine(), parameters);
         }
         writer += ")";
 
         List<String> list = new ArrayList<>();
-        if(function.isStatic()){
+        if(function.isStatic() || (function instanceof DefaultMethod)){
             writer += " {";
             list.add(writeTabs(tab) + writer);
-            List<Line> lines = ((Function.Writable) function).getLines();
+            List<Line<? extends CommonClass>> lines = ((Function.Writable) function).getLines();
             lines.stream().forEach(l -> list.add(writeTabs(tab + 1) + l.getAsJavaLine()));
             list.add(writeTabs(tab) + "}");
         }else {

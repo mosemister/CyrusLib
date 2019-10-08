@@ -2,7 +2,7 @@ package org.cyrus.classhandler.custom;
 
 import org.cyrus.CyrusLib;
 import org.cyrus.classhandler.common.classtype.CommonClass;
-import org.cyrus.classhandler.custom.classtype.CommonCustomClass;
+import org.cyrus.classhandler.custom.classtype.AbstractCommonCustomClass;
 import org.cyrus.classhandler.custom.classtype.CustomClassBuilder;
 
 import java.io.IOException;
@@ -22,12 +22,12 @@ public interface JavaClassReader {
     List<List<String>> getConstructors();
     List<List<String>> getMethods();
 
-    default CommonCustomClass<? extends CommonCustomClass> createBaseClass() throws IOException{
-        Optional<CustomClassBuilder<? extends CommonCustomClass>> opBuilder = CyrusLib.createBuilder(this.getClassType());
+    default AbstractCommonCustomClass<? extends AbstractCommonCustomClass> createBaseClass() throws IOException{
+        Optional<CustomClassBuilder<? extends AbstractCommonCustomClass>> opBuilder = CyrusLib.createBuilder(this.getClassType());
         if(!opBuilder.isPresent()){
             throw new IOException("Unknown ClassType of " + this.getClassType() + " - Was this registered?");
         }
-        CustomClassBuilder<? extends CommonCustomClass> builder = opBuilder.get();
+        CustomClassBuilder<? extends AbstractCommonCustomClass> builder = opBuilder.get();
         builder.setPackage(getPackage());
         builder.setName(getName());
         return builder.build();

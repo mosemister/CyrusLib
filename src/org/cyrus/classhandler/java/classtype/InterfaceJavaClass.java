@@ -3,7 +3,7 @@ package org.cyrus.classhandler.java.classtype;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.classtype.InterfaceClass;
 
-public class InterfaceJavaClass extends CommonJavaClass implements InterfaceClass {
+public class InterfaceJavaClass extends AbstractCommonJavaClass implements InterfaceClass {
 
     public static class GenericInterfaceJavaClass extends InterfaceJavaClass implements CommonClass.AppliedGenerics{
 

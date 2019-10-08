@@ -1,7 +1,6 @@
 package org.cyrus.classhandler.custom.classtype;
 
 import org.cyrus.classhandler.common.classtype.CommonClass;
-import org.cyrus.classhandler.common.classtype.InterfaceClass;
 import org.cyrus.classhandler.common.classtype.StandardClass;
 import org.cyrus.classhandler.common.function.constructor.Constructor;
 
@@ -9,14 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class StandardCustomClass <C extends StandardCustomClass> extends CommonCustomClass<C> implements StandardClass.Writable<C> {
+public class StandardCustomClass <C extends StandardCustomClass> extends AbstractCommonCustomClass<C> implements StandardClass.Writable<C> {
 
     public static class StandardClassBuilder extends CustomClassBuilder.AbstractCustomClassBuilder<StandardCustomClass> {
 
         boolean isAbstract;
         boolean isStatic;
         StandardClass<? extends StandardClass> extend;
-        List<? extends InterfaceClass> interfaces = new ArrayList<>();
 
         public CustomClassBuilder setAbstract(boolean isAbstract){
             this.isAbstract = isAbstract;
@@ -37,19 +35,14 @@ public class StandardCustomClass <C extends StandardCustomClass> extends CommonC
         public StandardCustomClass<StandardCustomClass> build() {
             StandardCustomClass<StandardCustomClass> scc = new StandardCustomClass<>(this.name, this.package1);
             scc.setAbstract(this.isAbstract);
-            scc.getImplements().addAll(this.interfaces);
             scc.setName(this.name);
             scc.setVisibility(this.visibility);
             scc.setStatic(this.isStatic);
-            if(extend != null){
+            if(this.extend != null){
                 scc.setExtends(this.extend);
             }
+            scc.getImplements().addAll(this.interfaces);
             return scc;
-        }
-
-        @Override
-        public Class<StandardCustomClass> getTargetClass() {
-            return StandardCustomClass.class;
         }
 
     }

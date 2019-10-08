@@ -7,9 +7,10 @@ import org.cyrus.classhandler.common.function.Function;
 import org.cyrus.classhandler.common.function.constructor.Constructor;
 import org.cyrus.classhandler.common.function.method.Method;
 import org.cyrus.classhandler.common.line.Line;
+import org.cyrus.classhandler.common.line.statement.Statement;
 import org.cyrus.classhandler.common.line.variable.Field;
 import org.cyrus.classhandler.common.line.variable.Parameter;
-import org.cyrus.classhandler.common.line.variable.Store;
+import org.cyrus.classhandler.common.line.variable.Variable;
 import org.cyrus.util.ArrayUtils;
 
 import java.util.*;
@@ -44,7 +45,7 @@ public class StandardClassWriter implements ClassWriter.TypeWriter<StandardClass
         list.add("");
         List<? extends Field> fields = class1.getFields();
         if(!fields.isEmpty()) {
-            fields.stream().forEach(f -> list.add(writeStore(f, finalTabIn + 1)));
+            fields.stream().forEach(f -> list.add(writeVariable(f, finalTabIn + 1)));
             list.add("");
         }
 
@@ -65,8 +66,8 @@ public class StandardClassWriter implements ClassWriter.TypeWriter<StandardClass
         return new HashSet<>(Arrays.asList(this));
     }
 
-    private static String writeStore(Store store, int tab){
-        return writeTabs(tab) + store.getCaller().getAsJavaLine();
+    private static String writeVariable(Variable variable, int tab){
+        return writeTabs(tab) + variable.getAsJavaLine() + ";";
     }
 
     private static List<String> writeMethods(CommonClass class1, int tab){
@@ -124,7 +125,7 @@ public class StandardClassWriter implements ClassWriter.TypeWriter<StandardClass
         writer += function.getName() + "(";
         List<Parameter<? extends CommonClass>> parameters = function.getParameters();
         if(!parameters.isEmpty()){
-            writer += ArrayUtils.toString(", ", p -> p.getReturn().get().getDisplayName() + " " + p.getName(), parameters);
+            writer += ArrayUtils.toString(", ", p -> p.getAsJavaLine(), parameters);
         }
         writer += ")";
 
@@ -132,8 +133,7 @@ public class StandardClassWriter implements ClassWriter.TypeWriter<StandardClass
         if(function instanceof Function.Writable){
             writer += " {";
             list.add(writeTabs(tab) + writer);
-            List<Line> lines = ((Function.Writable) function).getLines();
-            lines.stream().forEach(l -> list.add(writeTabs(tab + 1) + l.getAsJavaLine()));
+            list.addAll(writeStatement(tab, ((Function.Writable)function), false));
             list.add(writeTabs(tab) + "}");
         }else {
             writer += ";";
@@ -159,6 +159,24 @@ public class StandardClassWriter implements ClassWriter.TypeWriter<StandardClass
         }
         writing += " {";
         return writing;
+    }
+
+    private static List<String> writeStatement(int tab, Statement statement, boolean write){
+        List<String> lines = new ArrayList<>();
+        if(write && statement instanceof Statement.InLine) {
+            lines.add(writeTabs(tab) + ((Statement.InLine)statement).getAsJavaLine());
+        }
+        for(Line<? extends CommonClass> line : statement.getLines()) {
+            if(line instanceof Statement){
+                lines.addAll(writeStatement(tab + 1, (Statement)line, true));
+            } else {
+                lines.add(writeTabs(tab + 1) + line.getAsJavaLine() + ";");
+            }
+        }
+        if(write) {
+            lines.add(writeTabs(tab) + "}");
+        }
+        return lines;
     }
 
     private static String writeTabs(int tab){

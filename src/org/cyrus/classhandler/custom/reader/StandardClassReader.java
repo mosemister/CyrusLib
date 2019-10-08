@@ -7,7 +7,7 @@ import org.cyrus.classhandler.common.classtype.StandardClass;
 import org.cyrus.classhandler.common.function.constructor.Constructor;
 import org.cyrus.classhandler.common.function.method.Method;
 import org.cyrus.classhandler.common.line.variable.Field;
-import org.cyrus.classhandler.custom.classtype.CommonCustomClass;
+import org.cyrus.classhandler.custom.classtype.AbstractCommonCustomClass;
 import org.cyrus.classhandler.custom.classtype.StandardCustomClass;
 
 import java.util.*;
@@ -127,7 +127,7 @@ public class StandardClassReader implements ClassReader<StandardCustomClass> {
     }
 
     @Override
-    public Set<Constructor<StandardCustomClass>> readConstructors(CommonCustomClass clazz) {
+    public Set<Constructor<StandardCustomClass>> readConstructors(AbstractCommonCustomClass clazz) {
         List<String> lines = new ArrayList<>();
         boolean writing = false;
         int count = 0;
@@ -176,7 +176,7 @@ public class StandardClassReader implements ClassReader<StandardCustomClass> {
     }
 
     @Override
-    public Set<Method<StandardCustomClass>> readMethods(CommonCustomClass clazz) {
+    public Set<Method<StandardCustomClass>> readMethods(AbstractCommonCustomClass clazz) {
         return new HashSet<>();
     }
 

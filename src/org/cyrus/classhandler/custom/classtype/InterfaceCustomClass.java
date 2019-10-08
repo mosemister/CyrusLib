@@ -3,7 +3,7 @@ package org.cyrus.classhandler.custom.classtype;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.classtype.InterfaceClass;
 
-public class InterfaceCustomClass <C extends InterfaceCustomClass> extends CommonCustomClass<C> implements InterfaceClass<C> {
+public class InterfaceCustomClass <C extends InterfaceCustomClass> extends AbstractCommonCustomClass<C> implements InterfaceClass<C> {
 
     public static class InterfaceClassBuilder extends CustomClassBuilder.AbstractCustomClassBuilder<InterfaceCustomClass> implements CustomClassBuilder<InterfaceCustomClass>{
 
@@ -14,11 +14,6 @@ public class InterfaceCustomClass <C extends InterfaceCustomClass> extends Commo
             icc.setName(this.name);
             icc.setVisibility(this.visibility);
             return icc;
-        }
-
-        @Override
-        public Class<InterfaceCustomClass> getTargetClass() {
-            return InterfaceCustomClass.class;
         }
     }
 

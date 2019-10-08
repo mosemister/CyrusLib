@@ -1,24 +1,17 @@
 package org.cyrus.classhandler.custom.function;
 
 import org.cyrus.classhandler.common.Visibility;
-import org.cyrus.classhandler.common.classtype.CommonClass;
-import org.cyrus.classhandler.common.line.variable.Parameter;
-import org.cyrus.classhandler.custom.classtype.CommonCustomClass;
+import org.cyrus.classhandler.custom.classtype.AbstractCommonCustomClass;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+public abstract class CustomFunctionBuilder <C extends AbstractCommonCustomClass> {
 
-public abstract class CustomFunctionBuilder <C extends CommonCustomClass> {
-
-    protected CommonCustomClass.AppliedGenerics generics;
+    protected AbstractCommonCustomClass.AppliedGenerics generics;
     protected C attached;
     protected Visibility visibility = Visibility.PUBLIC;
 
     public abstract CustomFunction<C> build();
 
-    public CustomFunctionBuilder<C> setGenerics(CommonCustomClass.AppliedGenerics class1){
+    public CustomFunctionBuilder<C> setGenerics(AbstractCommonCustomClass.AppliedGenerics class1){
         this.generics = class1;
         return this;
     }

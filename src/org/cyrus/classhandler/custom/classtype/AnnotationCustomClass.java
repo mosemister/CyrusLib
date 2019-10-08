@@ -1,12 +1,12 @@
 package org.cyrus.classhandler.custom.classtype;
 
-import org.cyrus.classhandler.common.appliable.AnnotationAppliable;
+import org.cyrus.classhandler.common.appliable.AnnotationApplicable;
 import org.cyrus.classhandler.common.classtype.AnnotationClass;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 
-public class AnnotationCustomClass<C extends AnnotationCustomClass, A extends AnnotationAppliable> extends CommonCustomClass<C> implements AnnotationClass<C> {
+public class AnnotationCustomClass<C extends AnnotationCustomClass, A extends AnnotationApplicable> extends AbstractCommonCustomClass<C> implements AnnotationClass<C> {
 
-    public static class GenericAnnotationCustomClass<A extends AnnotationAppliable> extends AnnotationCustomClass<GenericAnnotationCustomClass<A>, A> implements CommonClass.AppliedGenerics<GenericAnnotationCustomClass<A>>{
+    public static class GenericAnnotationCustomClass<A extends AnnotationApplicable> extends AnnotationCustomClass<GenericAnnotationCustomClass<A>, A> implements CommonClass.AppliedGenerics<GenericAnnotationCustomClass<A>>{
 
         protected String displayName;
 

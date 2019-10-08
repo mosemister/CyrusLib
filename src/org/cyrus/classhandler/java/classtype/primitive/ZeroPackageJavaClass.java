@@ -17,14 +17,14 @@ public class ZeroPackageJavaClass<C extends ZeroPackageJavaClass> extends Standa
     public static final JavaPrimitiveClass[] PRIMITIVE = {INTEGER, DOUBLE, BOOLEAN, CHAR, FLOAT, LONG};
     public static final ZeroPackageJavaClass[] ZERO_PACKAGE = {OBJECT, STRING};
 
-    public static class ObjectClass extends ZeroPackageJavaClass<ObjectClass>{
+    public static class ObjectClass extends ZeroPackageJavaClass<ObjectClass> {
 
         public ObjectClass() {
             super(Object.class);
         }
     }
 
-    public static class StringClass extends ZeroPackageJavaClass<StringClass>{
+    public static class StringClass extends ZeroPackageJavaClass<StringClass> {
 
         public StringClass() {
             super(String.class);
@@ -36,7 +36,7 @@ public class ZeroPackageJavaClass<C extends ZeroPackageJavaClass> extends Standa
         }
     }
 
-    public static class UnknownPackageJavaClass extends ZeroPackageJavaClass{
+    public static class UnknownPackageJavaClass extends ZeroPackageJavaClass {
 
         public UnknownPackageJavaClass(Class<?> class1) {
             super(class1);

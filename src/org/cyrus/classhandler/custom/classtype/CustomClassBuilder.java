@@ -8,20 +8,19 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public interface CustomClassBuilder<C extends CommonCustomClass> {
+public interface CustomClassBuilder<C extends AbstractCommonCustomClass> {
 
     CustomClassBuilder<C> setPackage(String... packa);
     CustomClassBuilder<C> setName(String name);
     CustomClassBuilder<C> setImplements(Collection<? extends InterfaceClass> collection);
     CustomClassBuilder<C> setVisibility(Visibility visibility);
     C build();
-    Class<C> getTargetClass();
 
     default CustomClassBuilder setImplements(InterfaceClass... collection){
         return setImplements(Arrays.asList(collection));
     }
 
-    abstract class AbstractCustomClassBuilder<C extends CommonCustomClass> implements CustomClassBuilder<C>{
+    abstract class AbstractCustomClassBuilder<C extends AbstractCommonCustomClass> implements CustomClassBuilder<C>{
 
         String[] package1;
         String name;

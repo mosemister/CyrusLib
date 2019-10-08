@@ -8,9 +8,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * base class for enum classes
+ * @param <C> itself
+ */
 public interface EnumClass<C extends EnumClass> extends CommonClass<C> {
 
+    /**
+     * gets all enum entries
+     * @return all enum entries
+     */
     Set<EnumEntry> getEntries();
+
+    /**
+     * Gets the constructors of the enum
+     * @return The constructors
+     */
     List<Constructor<C>> getConstructors();
 
     @Override

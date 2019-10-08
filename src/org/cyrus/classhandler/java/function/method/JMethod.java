@@ -7,7 +7,7 @@ import org.cyrus.classhandler.common.classtype.GenericList;
 import org.cyrus.classhandler.common.function.method.Method;
 import org.cyrus.classhandler.common.function.method.imethod.InterfaceMethod;
 import org.cyrus.classhandler.common.line.variable.Parameter;
-import org.cyrus.classhandler.java.classtype.CommonJavaClass;
+import org.cyrus.classhandler.java.classtype.AbstractCommonJavaClass;
 import org.cyrus.classhandler.java.classtype.InterfaceJavaClass;
 import org.cyrus.classhandler.java.variable.JParameter;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class JMethod<C extends CommonJavaClass> implements Method<C> {
+public class JMethod<C extends AbstractCommonJavaClass> implements Method<C> {
 
     public static class JavaInterfaceMethod <C extends InterfaceJavaClass> extends JMethod<C> implements InterfaceMethod<C> {
 
@@ -63,7 +63,7 @@ public class JMethod<C extends CommonJavaClass> implements Method<C> {
                 if(!(argument instanceof Class)){
                     continue;
                 }
-                CommonJavaClass cjc = CommonJavaClass.of((Class)argument);
+                AbstractCommonJavaClass cjc = AbstractCommonJavaClass.of((Class)argument);
                 list.add(cjc.toAppliedGenerics(name));
             }
             vc.put(name, list);
@@ -111,7 +111,7 @@ public class JMethod<C extends CommonJavaClass> implements Method<C> {
         if(class1.getName().equals("void")){
             return Optional.empty();
         }
-        return Optional.of(CommonJavaClass.of(class1));
+        return Optional.of(AbstractCommonJavaClass.of(class1));
     }
 
     @Override

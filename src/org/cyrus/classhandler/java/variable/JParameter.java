@@ -3,6 +3,7 @@ package org.cyrus.classhandler.java.variable;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.function.Function;
 import org.cyrus.classhandler.common.line.variable.Parameter;
+import org.cyrus.classhandler.java.classtype.AbstractCommonJavaClass;
 import org.cyrus.classhandler.java.classtype.CommonJavaClass;
 
 import java.lang.reflect.Modifier;
@@ -30,7 +31,7 @@ public class JParameter<C extends CommonJavaClass> implements Parameter<C> {
 
     @Override
     public Optional<CommonClass<? extends CommonClass>> getReturn() {
-        return Optional.of(CommonJavaClass.of(this.parameter.getType()));
+        return Optional.of(AbstractCommonJavaClass.of(this.parameter.getType()));
     }
 
     @Override

@@ -1,15 +1,28 @@
 package org.cyrus.classhandler.custom.function.method.cmethod;
 
+import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.function.method.cmethod.StandardClassMethod;
-import org.cyrus.classhandler.custom.classtype.CommonCustomClass;
-import org.cyrus.classhandler.custom.classtype.CustomClassBuilder;
 import org.cyrus.classhandler.custom.classtype.StandardCustomClass;
-import org.cyrus.classhandler.custom.function.CustomFunction;
 import org.cyrus.classhandler.custom.function.method.CustomMethod;
 
 public class StandardCustomClassMethod<C extends StandardCustomClass> extends CustomMethod<C> implements StandardClassMethod<C> {
 
     public static class StandardMethodBuilder<C extends StandardCustomClass> extends CustomMethod.CustomMethodBuilder<C> {
+
+        @Override
+        public StandardMethodBuilder<C> setReturn(CommonClass<? extends CommonClass> clazz){
+            return (StandardMethodBuilder<C>) super.setReturn(clazz);
+        }
+
+        @Override
+        public StandardMethodBuilder<C> setAttachedClass(C clazz){
+            return (StandardMethodBuilder)super.setAttachedClass(clazz);
+        }
+
+        @Override
+        public StandardMethodBuilder<C> setName(String name){
+            return (StandardMethodBuilder)super.setName(name);
+        }
 
         @Override
         public StandardCustomClassMethod<C> build() {
@@ -34,6 +47,7 @@ public class StandardCustomClassMethod<C extends StandardCustomClass> extends Cu
             StandardCustomClassMethod<C> method = new StandardCustomClassMethod<>(this.attached, this.name);
             method.setStatic(this.isStatic);
             method.setVisibility(this.visibility);
+            method.setReturn(this.returnClass);
             this.attached.getMethods().add(method);
             return method;
         }

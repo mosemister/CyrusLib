@@ -51,4 +51,5 @@ public abstract class CustomFunction <C extends CommonClass> implements Function
     public List<Parameter<? extends CommonClass>> getParameters() {
         return this.parameters;
     }
+
 }

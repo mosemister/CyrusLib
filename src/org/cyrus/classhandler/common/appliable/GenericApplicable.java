@@ -7,11 +7,28 @@ import org.cyrus.util.ArrayUtils;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public interface GenericAppliable {
+/**
+ * An interfface desgined to extend onto anything that
+ * Generics (example - <A extends Object>) can apply to
+ */
+public interface GenericApplicable {
 
+    /**
+     * Returns if generics can be found
+     * @return true if generic has been found, false if not
+     */
     boolean hasGenerics();
+
+    /**
+     * Gets a list of all generics applied
+     * @return The generic list applied
+     */
     GenericList getGenerics();
 
+    /**
+     * Gets the default generics as written in Java
+     * @return A Java parsed line of generics
+     */
     default String getJavaGenericsLine(){
         if(!hasGenerics()){
             return "";
@@ -23,6 +40,10 @@ public interface GenericAppliable {
         return "<" + generics + ">";
     }
 
+    /**
+     * Gets the applied generics as written in Java
+     * @return A Java parsed line of generics
+     */
     default String getJavaAppliedGenericsLine(){
         if(!hasGenerics()){
             return "";
