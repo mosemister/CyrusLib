@@ -7,6 +7,7 @@ import org.cyrus.classhandler.common.line.statement.Statement;
 import org.cyrus.classhandler.common.line.variable.Variable;
 import org.cyrus.classhandler.java.classtype.ArrayJavaClass;
 import org.cyrus.classhandler.java.classtype.AbstractCommonJavaClass;
+import org.cyrus.util.ArrayUtils;
 
 import java.util.*;
 
@@ -77,6 +78,11 @@ public class ForEachStatement<X extends CommonClass> implements Statement.InLine
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public String[] getSplitName() {
+        return ArrayUtils.splitBy(getName(), 0, true, c -> Character.isUpperCase(c));
     }
 
     @Override

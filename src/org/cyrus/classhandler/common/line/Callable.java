@@ -21,6 +21,12 @@ public interface Callable extends Returnable {
     String getName();
 
     /**
+     * If the name of the callable is multiple words, it will be split here
+     * @return The split of words from the name
+     */
+    String[] getSplitName();
+
+    /**
      * @param attachedTo The class that will use the caller
      * @return creates a new caller that this calls to
      */

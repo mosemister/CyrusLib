@@ -195,6 +195,10 @@ public interface CommonClass <C extends CommonClass> extends Callable, GenericAp
         return new StaticClassCall(clazz, this);
     }
 
+    default String[] getSplitName(){
+        return ArrayUtils.splitBy(getName(), 0, true, cha -> Character.isUpperCase(cha));
+    }
+
 
     /**
      * The generics for a class

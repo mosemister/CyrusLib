@@ -125,6 +125,9 @@ public abstract class FunctionCall<F extends Function<? extends CommonClass>, C 
      */
     @Override
     public String getAsJavaLine() {
+        if(this.parameters.isEmpty()){
+            return this.function.getName() + " ()";
+        }
         return this.function.getName() + " (" + ArrayUtils.toString(", ", f -> f.getAsJavaLine(), this.parameters) + ")";
     }
 }

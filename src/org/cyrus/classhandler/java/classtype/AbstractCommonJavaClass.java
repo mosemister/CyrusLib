@@ -16,12 +16,26 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public abstract class AbstractCommonJavaClass<C extends AbstractCommonJavaClass> implements CommonJavaClass<C> {
 
     protected Class<? extends Object> class1;
+
+    public final static Map<Class<?>, Class<?>> FAILSAFE_PRIMITIVE_TYPES = new HashMap<>();
+    static {
+        FAILSAFE_PRIMITIVE_TYPES.put(boolean.class, Boolean.class);
+        FAILSAFE_PRIMITIVE_TYPES.put(byte.class, Byte.class);
+        FAILSAFE_PRIMITIVE_TYPES.put(short.class, Short.class);
+        FAILSAFE_PRIMITIVE_TYPES.put(char.class, Character.class);
+        FAILSAFE_PRIMITIVE_TYPES.put(int.class, Integer.class);
+        FAILSAFE_PRIMITIVE_TYPES.put(long.class, Long.class);
+        FAILSAFE_PRIMITIVE_TYPES.put(float.class, Float.class);
+        FAILSAFE_PRIMITIVE_TYPES.put(double.class, Double.class);
+    }
 
     protected AbstractCommonJavaClass(Class<? extends Object> class1){
         this.class1 = class1;
@@ -213,8 +227,7 @@ public abstract class AbstractCommonJavaClass<C extends AbstractCommonJavaClass>
             }
         }
         if (class2.isPrimitive()){
-            System.err.println("Unknown Primitive type: " + class2.getName() + " in CommandJavaClass.of");
-            return null;
+            return of(FAILSAFE_PRIMITIVE_TYPES.get(class2));
         }
         if(class2.isAnnotation()){
             return new AnnotationJavaClass(class2);

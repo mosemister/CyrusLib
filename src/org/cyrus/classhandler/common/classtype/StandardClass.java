@@ -3,7 +3,6 @@ package org.cyrus.classhandler.common.classtype;
 import org.cyrus.classhandler.common.function.constructor.Constructor;
 import org.cyrus.classhandler.common.function.method.Method;
 import org.cyrus.classhandler.common.line.Callable;
-import org.cyrus.classhandler.common.line.variable.Field;
 
 import java.util.HashSet;
 import java.util.List;

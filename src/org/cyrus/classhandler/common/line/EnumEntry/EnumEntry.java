@@ -3,6 +3,7 @@ package org.cyrus.classhandler.common.line.EnumEntry;
 import org.cyrus.classhandler.common.classtype.CommonClass;
 import org.cyrus.classhandler.common.classtype.EnumClass;
 import org.cyrus.classhandler.common.line.Callable;
+import org.cyrus.util.ArrayUtils;
 
 import java.util.Optional;
 
@@ -24,6 +25,11 @@ public interface EnumEntry extends Callable {
     @Override
     default Optional<CommonClass<? extends CommonClass>> getReturn() {
         return Optional.of(getAttachedClass());
+    }
+
+    @Override
+    default String[] getSplitName() {
+        return ArrayUtils.splitBy(getName(), 0, true, c -> Character.isUpperCase(c));
     }
 
 }

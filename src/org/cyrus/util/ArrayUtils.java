@@ -2,6 +2,7 @@ package org.cyrus.util;
 
 import java.util.Arrays;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ArrayUtils {
 
@@ -35,5 +36,54 @@ public class ArrayUtils {
             }
         }
         return ret;
+    }
+
+    public static String[] filter(int min, int max, String... array){
+        String[] arr = new String[(max + 1) - min];
+        for(int A = min; A <= max; A++){
+            arr[A - min] = array[A];
+        }
+        return arr;
+    }
+
+    public static String[] splitBy(String toSplit, int startWith, boolean combineStartWith, Predicate<Character> splitBy){
+        String[] split = new String[0];
+        int previousSplit = startWith;
+        for(int A = startWith; A < toSplit.length(); A++){
+            char character = toSplit.charAt(A);
+            if(splitBy.test(character)){
+                String[] newSplit = new String[split.length + 1];
+                for(int B = 0; B < split.length; B++){
+                    newSplit[B] = split[B];
+                }
+                newSplit[split.length] = toSplit.substring(previousSplit, A);
+                previousSplit = A;
+                split = newSplit;
+            }
+        }
+        String[] newSplit = new String[split.length + 1];
+        for(int B = 0; B < split.length; B++){
+            newSplit[B] = split[B];
+        }
+        newSplit[split.length] = toSplit.substring(previousSplit);
+        split = newSplit;
+        if(split.length == 0 && combineStartWith){
+            return new String[]{toSplit};
+        }
+        if(split.length == 0){
+            return split;
+        }
+        if(combineStartWith){
+            split[0] = toSplit.substring(0, startWith + split[0].length());
+        }
+        if(startWith == 0){
+            return split;
+        }
+        newSplit = new String[split.length];
+        for(int B = 0; B < split.length; B++){
+            newSplit[B + 1] = split[B];
+        }
+        newSplit[0] = toSplit.substring(0, startWith);
+        return newSplit;
     }
 }

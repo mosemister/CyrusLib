@@ -164,7 +164,7 @@ public class StandardClassWriter implements ClassWriter.TypeWriter<StandardClass
     private static List<String> writeStatement(int tab, Statement statement, boolean write){
         List<String> lines = new ArrayList<>();
         if(write && statement instanceof Statement.InLine) {
-            lines.add(writeTabs(tab) + ((Statement.InLine)statement).getAsJavaLine());
+            lines.add(writeTabs(tab) + ((Statement.InLine)statement).getAsJavaLine() + " {");
         }
         for(Line<? extends CommonClass> line : statement.getLines()) {
             if(line instanceof Statement){

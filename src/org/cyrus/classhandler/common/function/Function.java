@@ -8,6 +8,7 @@ import org.cyrus.classhandler.common.line.Callable;
 import org.cyrus.classhandler.common.line.Line;
 import org.cyrus.classhandler.common.line.statement.Statement;
 import org.cyrus.classhandler.common.line.variable.Parameter;
+import org.cyrus.util.ArrayUtils;
 
 import java.util.List;
 
@@ -26,6 +27,11 @@ public interface Function <C extends CommonClass> extends Callable, GenericAppli
     Visibility getVisibility();
 
     List<Parameter<? extends CommonClass>> getParameters();
+
+    @Override
+    default String[] getSplitName() {
+        return ArrayUtils.splitBy(getName(), 0, true, c -> Character.isUpperCase(c));
+    }
 
     /**
      * base class for writable functions

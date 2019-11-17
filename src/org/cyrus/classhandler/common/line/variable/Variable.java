@@ -5,6 +5,7 @@ import org.cyrus.classhandler.common.line.Callable;
 import org.cyrus.classhandler.common.line.Line;
 import org.cyrus.classhandler.common.line.Writable;
 import org.cyrus.classhandler.common.line.callers.variable.VariableCaller;
+import org.cyrus.util.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +17,18 @@ import java.util.Optional;
 public interface Variable<X extends CommonClass> extends Callable, Line<X>, Writable {
 
     /**
-     * Gets the name of the variable
-     * @return The name of the variable
-     */
-    String getName();
-
-    /**
      * Checks if the variable is a final variable
      * @return If it is a final variable
      */
     boolean isFinal();
+
+    @Override
+    default String[] getSplitName() {
+        if (isFinal()) {
+            return ArrayUtils.splitBy(getName(), 0, true, c -> c == '_');
+        }
+        return ArrayUtils.splitBy(getName(), 0, true, c -> Character.isUpperCase(c));
+    }
 
     /**
      * Creates a new instanceof of a caller
